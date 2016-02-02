@@ -1,3 +1,5 @@
+require 'pry'
+
 class ToDosController < ApplicationController
   before_action :set_to_do, only: [:show, :update, :destroy]
 
