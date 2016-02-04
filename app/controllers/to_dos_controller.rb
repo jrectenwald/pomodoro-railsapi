@@ -21,7 +21,13 @@ class ToDosController < ApplicationController
   # POST /to_dos.json
   def create
     @to_do = ToDo.new(to_do_params)
-
+    id = ""
+    request_url = request.env["HTTP_REFERER"]
+    (28...request_url.length).each do |i|
+      id += request_url[i] if !/(\D+)/.match(request_url[i])
+    end
+    user = User.find(id.to_i)
+    @to_do.user = user
     if @to_do.save
       render json: @to_do, status: :created, location: @to_do
     else
@@ -33,7 +39,6 @@ class ToDosController < ApplicationController
   # PATCH/PUT /to_dos/1.json
   def update
     @to_do = ToDo.find(params[:id])
-
     if @to_do.update(to_do_params)
       head :no_content
     else
@@ -56,6 +61,6 @@ class ToDosController < ApplicationController
     end
 
     def to_do_params
-      params[:to_do]
+      params.require(:to_do).permit(:description, :complete, :user_id, :user)
     end
 end

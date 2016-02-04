@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202173433) do
+ActiveRecord::Schema.define(version: 20160204161020) do
+
+  create_table "pomodoros", force: :cascade do |t|
+    t.string   "task"
+    t.integer  "to_do_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "to_dos", force: :cascade do |t|
     t.string   "description"
