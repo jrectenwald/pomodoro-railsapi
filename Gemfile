@@ -8,10 +8,9 @@ gem 'rails-api'
 gem 'spring', :group => :development
 
 
-gem 'sqlite3'
+gem 'pg'
 
 gem 'rack-cors'
-gem 'pry'
 
 gem 'active_model_serializers'
 

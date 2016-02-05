@@ -19,7 +19,13 @@ class PomodorosController < ApplicationController
   # POST /pomodoros.json
   def create
     @pomodoro = Pomodoro.new(pomodoro_params)
-
+     id = ""
+    request_url = request.env["HTTP_REFERER"]
+    (38...request_url.length).each do |i|
+      id += request_url[i] if !/(\D+)/.match(request_url[i])
+    end
+    to_do = ToDo.find(id.to_i)
+    @pomodoro.to_do = to_do
     if @pomodoro.save
       render json: @pomodoro, status: :created, location: @pomodoro
     else
