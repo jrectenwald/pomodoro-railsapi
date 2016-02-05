@@ -1,5 +1,3 @@
-require 'pry'
-
 class ToDosController < ApplicationController
   before_action :set_to_do, only: [:show, :update, :destroy]
 
@@ -23,9 +21,8 @@ class ToDosController < ApplicationController
     @to_do = ToDo.new(to_do_params)
     id = ""
     request_url = request.env["HTTP_REFERER"]
-    (28...request_url.length).each do |i|
-      id += request_url[i] if !/(\D+)/.match(request_url[i])
-    end
+    array = request_url.split('/')
+    id = array[-3]
     user = User.find(id.to_i)
     @to_do.user = user
     if @to_do.save

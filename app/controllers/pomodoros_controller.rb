@@ -1,3 +1,5 @@
+require 'pry'
+
 class PomodorosController < ApplicationController
   before_action :set_pomodoro, only: [:show, :update, :destroy]
 
@@ -19,11 +21,10 @@ class PomodorosController < ApplicationController
   # POST /pomodoros.json
   def create
     @pomodoro = Pomodoro.new(pomodoro_params)
-     id = ""
+    id = ""
     request_url = request.env["HTTP_REFERER"]
-    (38...request_url.length).each do |i|
-      id += request_url[i] if !/(\D+)/.match(request_url[i])
-    end
+    array = request_url.split('/')
+    id = array[-3]
     to_do = ToDo.find(id.to_i)
     @pomodoro.to_do = to_do
     if @pomodoro.save
